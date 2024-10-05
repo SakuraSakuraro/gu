@@ -84,22 +84,43 @@ def show_image_fullscreen():
     root = tk.Tk()
     root.attributes("-fullscreen", True)
     root.protocol("WM_DELETE_WINDOW", lambda: None)  # Block window closing
-    root.title("Glory to Ukraine!")
+    root.title("Glory to Ukraine! / Слава Україні! / Слава Украине!")
     
     icon_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'icon.ico'))
     root.iconbitmap(icon_path)
 
-    image_path = get_image_path("image.jpeg")
-    image = Image.open(image_path)
+    # Image list for slide show
+    image_files = [
+        get_image_path("image.jpg"),
+        get_image_path("image2.jpg"),
+        get_image_path("image3.jpg"),
+        get_image_path("image4.jpg"),
+        get_image_path("image5.jpg"),
+        get_image_path("image6.jpg"),
+        get_image_path("image7.jpg"),
+        get_image_path("image8.jpg"),
+        get_image_path("image9.jpg"),
+        get_image_path("image10.jpg"),
+        get_image_path("image11.jpg"),
+        get_image_path("image12.jpg")
+    ]
+    
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight()
-    
-    image_resized = image.resize((screen_width, screen_height), Image.LANCZOS)
-    tk_image = ImageTk.PhotoImage(image_resized)
 
-    label = tk.Label(root, image=tk_image)
+    label = tk.Label(root)
     label.pack()
 
+    def update_image(index):
+        image_path = image_files[index]
+        image = Image.open(image_path)
+        image_resized = image.resize((screen_width, screen_height), Image.LANCZOS)
+        tk_image = ImageTk.PhotoImage(image_resized)
+        label.config(image=tk_image)
+        label.image = tk_image
+        root.after(5000, update_image, (index + 1) % len(image_files))  # Changing images every 5 seconds
+
+    update_image(0)
     root.mainloop()
 
 # Show image in windowed mode
