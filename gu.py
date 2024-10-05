@@ -128,7 +128,7 @@ def show_image_windowed():
     root = tk.Tk()
     root.attributes('-fullscreen', False)
     root.resizable(tkconstants.FALSE, tkconstants.FALSE)
-    root.title("Glory to Ukraine!")
+    root.title("Glory to Ukraine! / Слава Україні! / Слава Украине!")
     
     icon_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'icon.ico'))
     root.iconbitmap(icon_path)
